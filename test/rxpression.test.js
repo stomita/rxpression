@@ -4,7 +4,7 @@ import assert from 'power-assert';
 
 import Rx from 'rx';
 import Promise from 'promise';
-import Rxpression from '../';
+import Rxpression from '../src/rxpression';
 
 describe('rxpression', () => {
 
