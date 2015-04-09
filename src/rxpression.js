@@ -15,7 +15,12 @@ export default class Rxpression {
    */
   constructor(expr) {
     var tree = esprima.parse(expr);
-    this._node = RxNode.build(tree.body[0]);
+    try {
+      this._node = RxNode.build(tree.body[0]);
+    } catch(e) {
+      console.error(JSON.stringify(tree.body[0], null, 4));
+      throw e;
+    }
     return this;
   }
 
