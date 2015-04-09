@@ -2,10 +2,30 @@
   "name": "rxpression",
   "version": "0.1.0",
   "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": "Shinichi Tomita <shinichi.tomita@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "main": "lib/rxpression.js",
+  "scripts": {
+    "build": "babel src/ -d lib/",
+    "clean": "rm -rf lib/*",
+    "watch": "watch 'npm run build' src/",
+    "test": "mocha --compilers js:babel/register --require espower-babel/guess"
+  },
+  "files": [
+    "README.md",
+    "package.json",
+    "lib"
+  ],
+  "devDependencies": {
+    "babel": "^5.0.12",
+    "espower-babel": "^1.4.1",
+    "mocha": "^2.2.4",
+    "power-assert": "^0.10.2",
+    "promise": "^7.0.0",
+    "watch": "^0.16.0"
+  },
+  "dependencies": {
+    "esprima": "^2.1.0",
+    "rx": "^2.5.1"
+  }
 }
