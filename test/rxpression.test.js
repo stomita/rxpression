@@ -13,8 +13,7 @@ describe('rxpression', () => {
     var context = { a : { b : 2 } };
     rxpr.evaluate(context).take(1).subscribe( (a) => {
       assert(a.b === 2);
-      done();
-    }, done);
+    }, done, done);
   });
 
   it('should calc from context', (done) => {
@@ -22,8 +21,7 @@ describe('rxpression', () => {
     var context = { a : 2, b : 4 };
     rxpr.evaluate(context).take(1).subscribe( (ret) => {
       assert(ret === 12);
-      done();
-    }, done);
+    }, done, done);
   });
 
   it('should get stream result from observable/promise variable', (done) => {
@@ -35,6 +33,17 @@ describe('rxpression', () => {
     };
     rxpr.evaluate(context).take(4).toArray().subscribe( (ret) => {
       assert.deepEqual(ret, [ 4, 9, 14, 19 ]);
+    }, done, done);
+  });
+
+  it('should access to property', (done) => {
+    var rxpr = new Rxpression('b["name"] + \' = \' + a[b.name]');
+    var context = {
+      a : { prop1: 1, prop2: 2 },
+      b : new Promise.resolve({ name: 'prop1' }),
+    };
+    rxpr.evaluate(context).subscribe( (ret) => {
+      assert(ret === 'prop1 = 1');
     }, done, done);
   });
 
