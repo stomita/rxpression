@@ -1,7 +1,7 @@
 {
   "name": "rxpression",
   "version": "0.1.0",
-  "description": "",
+  "description": "A simple Reactive Extension combinator using a JavaScript-subset expression language",
   "author": "Shinichi Tomita <shinichi.tomita@gmail.com>",
   "license": "MIT",
   "main": "lib/rxpression.js",
