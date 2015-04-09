@@ -6,7 +6,7 @@
   "license": "MIT",
   "main": "lib/rxpression.js",
   "scripts": {
-    "build": "babel src/ -d lib/",
+    "build": "babel src/ --source-maps inline --out-dir lib/",
     "clean": "rm -rf lib/*",
     "watch": "watch 'npm run build' src/",
     "test": "mocha --compilers js:babel/register --require espower-babel/guess"
