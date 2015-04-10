@@ -6,6 +6,7 @@ import ExpressionStatement from './expression-statement';
 import BinaryExpression from './binary-expression';
 import MemberExpression from './member-expression';
 import ObjectExpression from './object-expression';
+import ConditionalExpression from './conditional-expression';
 import Property from './property';
 import Identifier from './identifier';
 import Literal from './literal';
@@ -27,6 +28,8 @@ export default class RxNode {
         return new MemberExpression(config);
       case 'ObjectExpression' :
         return new ObjectExpression(config);
+      case 'ConditionalExpression' :
+        return new ConditionalExpression(config);
       case 'Property' :
         return new Property(config);
       case 'Identifier' :

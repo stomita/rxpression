@@ -9,7 +9,7 @@
     "build": "babel src/ --source-maps inline --out-dir lib/",
     "clean": "rm -rf lib/*",
     "watch": "watch 'npm run build' src/",
-    "test": "mocha --compilers js:babel/register --require espower-babel/guess"
+    "test": "mocha --compilers js:babel/register --require espower-babel/guess --timeout 20000"
   },
   "files": [
     "README.md",
