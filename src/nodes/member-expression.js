@@ -26,9 +26,9 @@ export default class MemberExpression {
       this.object.evaluate(context),
       this.computed ? this.property.evaluate(context) : Rx.Observable.just(this.property.name),
       function(object, property) {
-        return object[property];
+        return RxNode.toObservable(object[property]);
       }
-    );
+    ).flatMap((ret) => ret);
   }
 
 }
