@@ -123,4 +123,17 @@ describe('rxpression', () => {
   });
 
 
+  it('should call function', (done) => {
+    var rxpr = new Rxpression('a.func(b)');
+    var context = {
+      a : Promise.resolve({
+            func : Rx.Observable.interval(150).map((i) => (t) => `Func${i+1}: ${t}`)
+          }),
+      b : Rx.Observable.interval(200)
+    };
+    rxpr.evaluate(context).take(4).toArray().subscribe( (rets) => {
+      assert.deepEqual(rets, [ 'Func1: 0', 'Func2: 0', 'Func2: 1', 'Func3: 1' ]);
+    }, done, done);
+  });
+
 });

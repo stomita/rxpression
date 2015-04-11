@@ -9,6 +9,7 @@ import MemberExpression from './member-expression';
 import ArrayExpression from './array-expression';
 import ObjectExpression from './object-expression';
 import ConditionalExpression from './conditional-expression';
+import CallExpression from './call-expression';
 import Property from './property';
 import Identifier from './identifier';
 import Literal from './literal';
@@ -36,6 +37,8 @@ export default class RxNode {
         return new ObjectExpression(config);
       case 'ConditionalExpression' :
         return new ConditionalExpression(config);
+      case 'CallExpression' :
+        return new CallExpression(config);
       case 'Property' :
         return new Property(config);
       case 'Identifier' :
