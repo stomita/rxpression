@@ -20,10 +20,10 @@ export default class Identifier extends RxNode {
    * @returns {Observable}
    */
   evaluate(context) {
-    return RxNode.toObservable(context).filter( (obj) => {
-      return obj;
-    }).flatMap( (obj) => {
-      var value = obj[this.name];
+    return RxNode.toObservable(context).filter(ctx => {
+      return ctx;
+    }).flatMap(ctx => {
+      var value = ctx[this.name];
       return RxNode.toObservable(value);
     });
   }

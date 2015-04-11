@@ -30,7 +30,9 @@ export default class Rxpression {
    */
   evaluate(context) {
     context = RxNode.toObservable(context);
-    return this._node.evaluate(context);
+    return this._node.evaluate(context).map(ret => {
+      return RxNode.combineLatestRecursive(ret);
+    }).flatMap(ret => ret) ;
   }
 
 };

@@ -22,14 +22,22 @@ export default class MemberExpression extends RxNode {
    * @param {Observable} context
    * @returns {Observable}
    */
+  evaluateMember(context) {
+    var object = this.object.evaluate(context);
+    var property = this.computed ? this.property.evaluate(context) : Rx.Observable.just(this.property.name);
+    return Rx.Observable.combineLatest(object, property, (object, property) => {
+      return RxNode.toObservable(object[property]).map(p => {
+        return { object: object, property: p };
+      });
+    }).flatMap(ret => ret);
+  }
+
+  /**
+   * @param {Observable} context
+   * @returns {Observable}
+   */
   evaluate(context) {
-    return Rx.Observable.combineLatest(
-      this.object.evaluate(context),
-      this.computed ? this.property.evaluate(context) : Rx.Observable.just(this.property.name),
-      function(object, property) {
-        return RxNode.toObservable(object[property]);
-      }
-    ).flatMap((ret) => ret);
+    return this.evaluateMember(context).map(ret => ret.property);
   }
 
 }
