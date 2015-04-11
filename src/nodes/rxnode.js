@@ -2,52 +2,38 @@
 
 import Rx from 'rx';
 
-import ExpressionStatement from './expression-statement';
-import BinaryExpression from './binary-expression';
-import LogicalExpression from './logical-expression';
-import MemberExpression from './member-expression';
-import ArrayExpression from './array-expression';
-import ObjectExpression from './object-expression';
-import ConditionalExpression from './conditional-expression';
-import CallExpression from './call-expression';
-import Property from './property';
-import Identifier from './identifier';
-import Literal from './literal';
+import nodes from './';
+
+
+//
+var isArray = Array.isArray || (obj) => Object.prototype.toString.call(obj) === '[object Array]';
+var isObject = (obj) => {
+  var type = typeof obj;
+  return type === 'function' || type === 'object' && !!obj;
+};
+
 
 /**
  *
  */
 export default class RxNode {
+
+  constructor(options) {
+    options = options || {};
+    this._debug = options.debug;
+  }
+
+  log(...msg) {
+    if (this._debug) { console.log(...msg); }
+  }
+
   /**
    *
    */
-  static build(config) {
-    switch (config.type) {
-      case 'ExpressionStatement' :
-        return new ExpressionStatement(config);
-      case 'BinaryExpression' :
-        return new BinaryExpression(config);
-      case 'LogicalExpression' :
-        return new LogicalExpression(config);
-      case 'MemberExpression' :
-        return new MemberExpression(config);
-      case 'ArrayExpression' :
-        return new ArrayExpression(config);
-      case 'ObjectExpression' :
-        return new ObjectExpression(config);
-      case 'ConditionalExpression' :
-        return new ConditionalExpression(config);
-      case 'CallExpression' :
-        return new CallExpression(config);
-      case 'Property' :
-        return new Property(config);
-      case 'Identifier' :
-        return new Identifier(config);
-      case 'Literal' :
-        return new Literal(config);
-      default:
-        throw new Error('No node type registered: ' + config.type)
-    }
+  static build(config, options) {
+    var Node = nodes[config.type];
+    if (!Node) { throw new Error('No node type registered: ' + config.type); }
+    return new Node(config, options);
   }
 
   /**
@@ -63,10 +49,16 @@ export default class RxNode {
     }
   }
 
+  /**
+   *
+   */
   static isObservable(value) {
     return typeof value === 'object' && typeof value.subscribe === 'function';
   }
 
+  /**
+   *
+   */
   static isPromiseLike(value) {
     return typeof value === 'object' && typeof value.then === 'function';
   }

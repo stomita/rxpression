@@ -6,15 +6,16 @@ import RxNode from './rxnode';
 /**
  *
  */
-export default class MemberExpression {
+export default class MemberExpression extends RxNode {
 
   /**
    * @param {Object} config - AST config for the node
    */
-  constructor(config) {
+  constructor(config, options) {
+    super(options);
     this.computed = config.computed;
-    this.object = RxNode.build(config.object);
-    this.property = RxNode.build(config.property);
+    this.object = RxNode.build(config.object, options);
+    this.property = RxNode.build(config.property, options);
   }
 
   /**

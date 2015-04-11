@@ -6,14 +6,15 @@ import RxNode from './rxnode';
 /**
  *
  */
-export default class CallExpression {
+export default class CallExpression extends RxNode {
 
   /**
    * @param {Object} config - AST config for the node
    */
-  constructor(config) {
-    this.callee = RxNode.build(config.callee);
-    this.arguments = config.arguments.map((arg) => RxNode.build(arg));
+  constructor(config, options) {
+    super(options);
+    this.callee = RxNode.build(config.callee, options);
+    this.arguments = config.arguments.map((arg) => RxNode.build(arg, options));
   }
 
   /**

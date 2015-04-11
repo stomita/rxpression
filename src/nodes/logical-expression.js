@@ -9,15 +9,16 @@ var andOp = (a, b) => a && b;
 /**
  *
  */
-export default class LogicalExpression {
+export default class LogicalExpression extends RxNode {
 
   /**
    * @param {Object} config - AST config for the node
    */
-  constructor(config) {
+  constructor(config, options) {
+    super(options);
     this.operator = config.operator;
-    this.left = RxNode.build(config.left);
-    this.right = RxNode.build(config.right);
+    this.left = RxNode.build(config.left, options);
+    this.right = RxNode.build(config.right, options);
   }
 
   /**

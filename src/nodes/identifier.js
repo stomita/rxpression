@@ -5,12 +5,13 @@ import RxNode from './rxnode';
 /**
  *
  */
-export default class Identifier {
+export default class Identifier extends RxNode {
 
   /**
    * @param {Object} config - AST config for the node
    */
-  constructor(config) {
+  constructor(config, options) {
+    super(options);
     this.name = config.name;
   }
 

@@ -3,7 +3,7 @@
 import esprima from 'esprima';
 import Rx from 'rx';
 
-import RxNode from './nodes/rxnode';
+import { RxNode } from './nodes';
 
 /**
  *

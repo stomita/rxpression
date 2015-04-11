@@ -6,13 +6,14 @@ import RxNode from './rxnode';
 /**
  *
  */
-export default class ObjectExpression {
+export default class ObjectExpression extends RxNode {
 
   /**
    * @param {Object} config - AST config for the node
    */
-  constructor(config) {
-    this.properties = config.properties.map( (prop) => RxNode.build(prop) );
+  constructor(config, options) {
+    super(options);
+    this.properties = config.properties.map( (prop) => RxNode.build(prop, options) );
   }
 
   /**
