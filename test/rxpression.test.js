@@ -47,6 +47,22 @@ describe('rxpression', () => {
     }, done, done);
   });
 
+  it('should construct array', (done) => {
+    var rxpr = new Rxpression('[a, b, c]');
+    var context = {
+      a: 1,
+      b: 2,
+      c: Rx.Observable.of(1, 2, 3)
+    };
+    rxpr.evaluate(context).take(3).toArray().subscribe((rets) => {
+      assert.deepEqual(rets, [
+        [ 1, 2, 1 ],
+        [ 1, 2, 2 ],
+        [ 1, 2, 3 ]
+      ]);
+    }, done, done);
+  });
+
   it('should initialize object', (done) => {
     var rxpr = new Rxpression('({ "Full Name": contact.firstName + \' \' + contact.lastName, Age: contact.age + 1  })');
     var context = {
@@ -84,5 +100,6 @@ describe('rxpression', () => {
     context.b.connect();
     context.c.connect();
   });
+
 
 });
