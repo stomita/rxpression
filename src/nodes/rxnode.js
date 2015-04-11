@@ -4,6 +4,7 @@ import Rx from 'rx';
 
 import ExpressionStatement from './expression-statement';
 import BinaryExpression from './binary-expression';
+import LogicalExpression from './logical-expression';
 import MemberExpression from './member-expression';
 import ArrayExpression from './array-expression';
 import ObjectExpression from './object-expression';
@@ -25,6 +26,8 @@ export default class RxNode {
         return new ExpressionStatement(config);
       case 'BinaryExpression' :
         return new BinaryExpression(config);
+      case 'LogicalExpression' :
+        return new LogicalExpression(config);
       case 'MemberExpression' :
         return new MemberExpression(config);
       case 'ArrayExpression' :
