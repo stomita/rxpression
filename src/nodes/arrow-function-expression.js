@@ -15,7 +15,7 @@ export default class ArrowFunctionExpression extends RxNode {
     super(options);
     this.params = config.params;
     this.defaults = config.defaults.map(value => RxNode.build(value, options));
-    this.body = RxNode.build(config.body, { debug: true });
+    this.body = RxNode.build(config.body, options);
   }
 
   /**
