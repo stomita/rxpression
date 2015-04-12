@@ -6,7 +6,7 @@
   "license": "MIT",
   "main": "lib/rxpression.js",
   "scripts": {
-    "build": "babel src/ --options coreAliasing --source-maps inline --out-dir lib/",
+    "build": "babel src/ --optional runtime --source-maps inline --out-dir lib/",
     "clean": "rm -rf lib/*",
     "watch": "watch 'npm run build' src/",
     "test": "mocha --compilers js:babel/register --require espower-babel/guess --timeout 20000"
@@ -28,6 +28,7 @@
     "xmlhttprequest": "^1.7.0"
   },
   "dependencies": {
+    "babel-runtime": "^5.0.12",
     "esprima": "^2.1.0",
     "rx": "^2.5.1"
   }

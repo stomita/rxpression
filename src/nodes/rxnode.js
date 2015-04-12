@@ -23,6 +23,10 @@ export default class RxNode {
     this._debug = options.debug;
   }
 
+  evaluate(config) {
+    throw new Error('evaluate() should be implemented in subclass.');
+  }
+
   log(...msg) {
     if (this._debug) { console.log(...msg); }
   }
@@ -32,7 +36,12 @@ export default class RxNode {
    */
   static build(config, options) {
     var Node = nodes[config.type];
-    if (!Node) { throw new Error('No node type registered: ' + config.type); }
+    if (!Node) {
+      var error = new Error('No node type registered: ' + config.type);
+      error.lineNumber = config.loc.start.line;
+      error.column = config.loc.start.column;
+      throw error;
+    }
     return new Node(config, options);
   }
 
