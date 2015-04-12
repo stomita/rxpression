@@ -7,7 +7,7 @@ A simple [Reactive Extension](https://github.com/Reactive-Extensions/RxJS) combi
 
 ## Usage
 
-### Simle Calculation
+### Simple Calculation
 
 ```javascript
 var rxpr = new Rxpression('a * b - 1');
