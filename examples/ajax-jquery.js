@@ -5,19 +5,26 @@ var $ = require('jquery')(win);
 XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
 $.support.cors = true;
 $.ajaxSettings.xhr = function() { return new XMLHttpRequest(); };
-$('body').html('<input id="state" type="text">');
 
 var Rxpression = require('../');
 
-var stateSelect = $('<select><option>CA</option><option>TX</option><option>OR</option></select>');
-$('body').append(stateSelect);
+$('body').html(
+  '<select id="state">'+
+    '<option>CA</option>'+
+    '<option>TX</option>'+
+    '<option>OR</option>'+
+  '</select>'
+);
+var stateSelect = $('#state');
 var context = {
   listAllCounty: function(state) {
-    return $.getJSON('http://api.sba.gov/geodata/county_links_for_state_of/' + state + '.json').promise();
+    var url = 'http://api.sba.gov/geodata/county_links_for_state_of/' + state + '.json';
+    return $.getJSON(url).promise();
   },
   state: Rx.Observable.fromEvent(stateSelect, 'change')
 };
 
+// List counties for selected state in the UnitedStates
 var rxpr = new Rxpression('listAllCounty(state.target.value).length');
 rxpr.evaluate(context).take(3).subscribe(function(result) {
   console.log('state conties: ', result); // 58, 84, 32

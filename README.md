@@ -20,18 +20,26 @@ rxpr.evaluate(context).subscribe(function(result) {
 });
 ```
 
-### Ajax
+### Ajax with jQuery
 
 ```javascript
-$('body').html('<select id="state"><option>CA</option><option>TX</option><option>OR</option></select>');
+$('body').html(
+  '<select id="state">'+
+    '<option>CA</option>'+
+    '<option>TX</option>'+
+    '<option>OR</option>'+
+  '</select>'
+);
 var stateSelect = $('#state');
 var context = {
   listAllCounty: function(state) {
-    return $.getJSON('http://api.sba.gov/geodata/county_links_for_state_of/' + state + '.json').promise();
+    var url = 'http://api.sba.gov/geodata/county_links_for_state_of/' + state + '.json';
+    return $.getJSON(url).promise();
   },
   state: Rx.Observable.fromEvent(stateSelect, 'change')
 };
 
+// get count of counties in the selected state in United States
 var rxpr = new Rxpression('listAllCounty(state.target.value).length');
 rxpr.evaluate(context).subscribe(function(result) {
   console.log('state conties: ', result); // output the number of counties for selected state
