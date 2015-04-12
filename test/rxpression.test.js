@@ -157,4 +157,14 @@ describe('rxpression', () => {
     }, done, done);
   });
 
+  it('should evaluate negate operation', (done) => {
+    var rxpr = new Rxpression('!a');
+    var context = {
+      a : Rx.Observable.of(false, 0, 1, true, "", "a")
+    };
+    rxpr.evaluate(context).take(6).toArray().subscribe(rets => {
+      assert.deepEqual(rets, [ true, true, false, false, true, false ]);
+    }, done, done);
+  });
+
 });
