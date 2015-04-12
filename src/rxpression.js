@@ -21,6 +21,9 @@ export default class Rxpression {
       }
       this._node = RxNode.build(tree.body[0]);
     } catch(e) {
+      if (options.debug) {
+        console.error(e.stack);
+      }
       throw createExpressionSyntaxError(expr, e);
     }
     return this;
