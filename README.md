@@ -42,6 +42,6 @@ var context = {
 // get count of counties in the selected state in United States
 var rxpr = new Rxpression('listAllCounty(state.target.value).length');
 rxpr.evaluate(context).subscribe(function(result) {
-  console.log('state conties: ', result); // output the number of counties for selected state
+  console.log('state conties: ', result);
 });
 ```
