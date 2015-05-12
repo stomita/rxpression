@@ -4,6 +4,22 @@
 
 A simple [Reactive Extension](https://github.com/Reactive-Extensions/RxJS) combinator using a JavaScript-subset expression language
 
+## Abstract
+
+Rxpression is a Reactive Extension Observable generator using simple JavaScript expression.
+The Rxpression instance accepts context information defining variables used in the expression,
+yields an Observable stream which emits evaluated result.
+
+If a variable in the context or any intermediate evaluated result is Promise or Observable,
+the evaluation is applied to its emitted result.
+
+It enables you to describe dependencies simply, instead of writing Promise chaining or Observable methods, even in asynchronous streaming environment.
+
+## Install
+
+```
+$ npm install rxpression
+```
 
 ## Usage
 
