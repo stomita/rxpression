@@ -6,7 +6,7 @@ import nodes from './';
 
 
 //
-var isArray = Array.isArray || (obj) => Object.prototype.toString.call(obj) === '[object Array]';
+var isArray = Array.isArray || ((obj) => Object.prototype.toString.call(obj) === '[object Array]');
 var isObject = (obj) => {
   var type = typeof obj;
   return type === 'function' || type === 'object' && !!obj;
