@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/stomita/rxpression.svg)](https://travis-ci.org/stomita/rxpression)
 
-A simple [Reactive Extension](https://github.com/Reactive-Extensions/RxJS) combinator using a JavaScript-subset expression language
+A simple [Reactive Extension](https://github.com/Reactive-Extensions/RxJS) combinator using JavaScript-based expression
 
 ## Abstract
 
