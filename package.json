@@ -5,13 +5,18 @@
   "author": "Shinichi Tomita <shinichi.tomita@gmail.com>",
   "license": "MIT",
   "main": "lib/rxpression.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stomita/rxpression.git"
+  },
   "scripts": {
     "build:compile": "babel src/ --optional runtime --source-maps inline --out-dir lib/",
-    "build:browserify": "browserify lib/rxpression.js > dist/rxpression.js",
-    "build": "npm run build:compile && npm run build:browserify",
+    "build:browserify": "browserify lib/rxpression.js --standalone Rxpression > dist/rxpression.js",
+    "build:uglify": "uglifyjs dist/rxpression.js --source-map dist/rxpression.min.js.map -o dist/rxpression.min.js",
+    "build": "npm run build:compile && npm run build:browserify && npm run build:uglify",
     "clean": "rm -rf lib/*; rm -rf dist/*",
     "watch": "watch 'npm run build' src/",
-    "server": "./bin/server",
+    "start": "./bin/server",
     "test": "mocha --compilers js:babel/register --require espower-babel/guess --timeout 20000"
   },
   "files": [
@@ -31,6 +36,7 @@
     "power-assert": "^0.11.0",
     "promise": "^7.0.1",
     "react": "^0.13.3",
+    "uglify-js": "^2.4.23",
     "watch": "^0.16.0",
     "xmlhttprequest": "^1.7.0"
   },

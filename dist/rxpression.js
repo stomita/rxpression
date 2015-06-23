@@ -1,4 +1,4 @@
-(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.Rxpression = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
 var _inherits = require('babel-runtime/helpers/inherits')['default'];
@@ -51,13 +51,13 @@ var ArrayExpression = (function (_RxNode) {
   _inherits(ArrayExpression, _RxNode);
 
   _createClass(ArrayExpression, [{
-    key: 'evaluate',
+    key: '_evaluate',
 
     /**
      * @param {Observable} context
      * @returns {Observable}
      */
-    value: function evaluate(context, debug) {
+    value: function _evaluate(context, debug) {
       var _Rx$Observable;
 
       var elems = this.elements.map(function (elem) {
@@ -79,7 +79,7 @@ var ArrayExpression = (function (_RxNode) {
 exports['default'] = ArrayExpression;
 module.exports = exports['default'];
 
-},{"./rxnode":14,"babel-runtime/core-js/object/define-property":20,"babel-runtime/helpers/class-call-check":22,"babel-runtime/helpers/create-class":23,"babel-runtime/helpers/get":24,"babel-runtime/helpers/inherits":25,"babel-runtime/helpers/interop-require-default":26,"babel-runtime/helpers/to-consumable-array":27,"rx":54}],2:[function(require,module,exports){
+},{"./rxnode":14,"babel-runtime/core-js/object/define-property":19,"babel-runtime/helpers/class-call-check":22,"babel-runtime/helpers/create-class":23,"babel-runtime/helpers/get":24,"babel-runtime/helpers/inherits":25,"babel-runtime/helpers/interop-require-default":26,"babel-runtime/helpers/to-consumable-array":27,"rx":55}],2:[function(require,module,exports){
 'use strict';
 
 var _inherits = require('babel-runtime/helpers/inherits')['default'];
@@ -132,13 +132,13 @@ var ArrowFunctionExpression = (function (_RxNode) {
   _inherits(ArrowFunctionExpression, _RxNode);
 
   _createClass(ArrowFunctionExpression, [{
-    key: 'evaluate',
+    key: '_evaluate',
 
     /**
      * @param {Observable} context
      * @returns {Observable}
      */
-    value: function evaluate(context) {
+    value: function _evaluate(context) {
       var _this = this;
 
       var defaults = this.defaults.map(function (value) {
@@ -170,7 +170,7 @@ var ArrowFunctionExpression = (function (_RxNode) {
 exports['default'] = ArrowFunctionExpression;
 module.exports = exports['default'];
 
-},{"./rxnode":14,"babel-runtime/core-js/object/define-property":20,"babel-runtime/helpers/class-call-check":22,"babel-runtime/helpers/create-class":23,"babel-runtime/helpers/get":24,"babel-runtime/helpers/inherits":25,"babel-runtime/helpers/interop-require-default":26,"rx":54}],3:[function(require,module,exports){
+},{"./rxnode":14,"babel-runtime/core-js/object/define-property":19,"babel-runtime/helpers/class-call-check":22,"babel-runtime/helpers/create-class":23,"babel-runtime/helpers/get":24,"babel-runtime/helpers/inherits":25,"babel-runtime/helpers/interop-require-default":26,"rx":55}],3:[function(require,module,exports){
 'use strict';
 
 var _inherits = require('babel-runtime/helpers/inherits')['default'];
@@ -294,13 +294,13 @@ var BinaryExpression = (function (_RxNode) {
   _inherits(BinaryExpression, _RxNode);
 
   _createClass(BinaryExpression, [{
-    key: 'evaluate',
+    key: '_evaluate',
 
     /**
      * @param {Observable} context
      * @returns {Observable}
      */
-    value: function evaluate(context) {
+    value: function _evaluate(context) {
       var operation = BINARY_OPERATIONS[this.operator];
       return _rx2['default'].Observable.combineLatest(this.left.evaluate(context), this.right.evaluate(context), operation);
     }
@@ -312,7 +312,7 @@ var BinaryExpression = (function (_RxNode) {
 exports['default'] = BinaryExpression;
 module.exports = exports['default'];
 
-},{"./rxnode":14,"babel-runtime/core-js/object/define-property":20,"babel-runtime/helpers/class-call-check":22,"babel-runtime/helpers/create-class":23,"babel-runtime/helpers/get":24,"babel-runtime/helpers/inherits":25,"babel-runtime/helpers/interop-require-default":26,"rx":54}],4:[function(require,module,exports){
+},{"./rxnode":14,"babel-runtime/core-js/object/define-property":19,"babel-runtime/helpers/class-call-check":22,"babel-runtime/helpers/create-class":23,"babel-runtime/helpers/get":24,"babel-runtime/helpers/inherits":25,"babel-runtime/helpers/interop-require-default":26,"rx":55}],4:[function(require,module,exports){
 'use strict';
 
 var _inherits = require('babel-runtime/helpers/inherits')['default'];
@@ -370,13 +370,13 @@ var CallExpression = (function (_RxNode) {
   _inherits(CallExpression, _RxNode);
 
   _createClass(CallExpression, [{
-    key: 'evaluate',
+    key: '_evaluate',
 
     /**
      * @param {Observable} context
      * @returns {Observable}
      */
-    value: function evaluate(context) {
+    value: function _evaluate(context) {
       var _Rx$Observable;
 
       var callee;
@@ -413,7 +413,7 @@ var CallExpression = (function (_RxNode) {
 exports['default'] = CallExpression;
 module.exports = exports['default'];
 
-},{"./member-expression":11,"./rxnode":14,"babel-runtime/core-js/object/define-property":20,"babel-runtime/helpers/class-call-check":22,"babel-runtime/helpers/create-class":23,"babel-runtime/helpers/get":24,"babel-runtime/helpers/inherits":25,"babel-runtime/helpers/interop-require-default":26,"babel-runtime/helpers/to-consumable-array":27,"rx":54}],5:[function(require,module,exports){
+},{"./member-expression":11,"./rxnode":14,"babel-runtime/core-js/object/define-property":19,"babel-runtime/helpers/class-call-check":22,"babel-runtime/helpers/create-class":23,"babel-runtime/helpers/get":24,"babel-runtime/helpers/inherits":25,"babel-runtime/helpers/interop-require-default":26,"babel-runtime/helpers/to-consumable-array":27,"rx":55}],5:[function(require,module,exports){
 'use strict';
 
 var _inherits = require('babel-runtime/helpers/inherits')['default'];
@@ -464,16 +464,18 @@ var ConditionalExpression = (function (_RxNode) {
   _inherits(ConditionalExpression, _RxNode);
 
   _createClass(ConditionalExpression, [{
-    key: 'evaluate',
+    key: '_evaluate',
 
     /**
      * @param {Observable} context
      * @returns {Observable}
      */
-    value: function evaluate(context) {
-      return _rx2['default'].Observable.combineLatest(this.test.evaluate(context), this.consequent.evaluate(context), this.alternate.evaluate(context), function (testResult, consequentResult, alternateResult) {
-        return testResult ? consequentResult : alternateResult;
-      }).distinctUntilChanged();
+    value: function _evaluate(context) {
+      var testResult = this.test.evaluate(context);
+      var testNegate = testResult.map(function (t) {
+        return !t;
+      });
+      return _rx2['default'].Observable.merge(this.consequent.evaluate(context).pausableBuffered(testResult).debounce(1), this.alternate.evaluate(context).pausableBuffered(testNegate).debounce(1));
     }
   }]);
 
@@ -483,7 +485,7 @@ var ConditionalExpression = (function (_RxNode) {
 exports['default'] = ConditionalExpression;
 module.exports = exports['default'];
 
-},{"./rxnode":14,"babel-runtime/core-js/object/define-property":20,"babel-runtime/helpers/class-call-check":22,"babel-runtime/helpers/create-class":23,"babel-runtime/helpers/get":24,"babel-runtime/helpers/inherits":25,"babel-runtime/helpers/interop-require-default":26,"rx":54}],6:[function(require,module,exports){
+},{"./rxnode":14,"babel-runtime/core-js/object/define-property":19,"babel-runtime/helpers/class-call-check":22,"babel-runtime/helpers/create-class":23,"babel-runtime/helpers/get":24,"babel-runtime/helpers/inherits":25,"babel-runtime/helpers/interop-require-default":26,"rx":55}],6:[function(require,module,exports){
 'use strict';
 
 var _inherits = require('babel-runtime/helpers/inherits')['default'];
@@ -528,13 +530,13 @@ var ExpressionStatement = (function (_RxNode) {
   _inherits(ExpressionStatement, _RxNode);
 
   _createClass(ExpressionStatement, [{
-    key: 'evaluate',
+    key: '_evaluate',
 
     /**
      * @param {Observable} context
      * @returns {Observable}
      */
-    value: function evaluate(context) {
+    value: function _evaluate(context) {
       return this.expression.evaluate(context);
     }
   }]);
@@ -545,7 +547,7 @@ var ExpressionStatement = (function (_RxNode) {
 exports['default'] = ExpressionStatement;
 module.exports = exports['default'];
 
-},{"./rxnode":14,"babel-runtime/core-js/object/define-property":20,"babel-runtime/helpers/class-call-check":22,"babel-runtime/helpers/create-class":23,"babel-runtime/helpers/get":24,"babel-runtime/helpers/inherits":25,"babel-runtime/helpers/interop-require-default":26}],7:[function(require,module,exports){
+},{"./rxnode":14,"babel-runtime/core-js/object/define-property":19,"babel-runtime/helpers/class-call-check":22,"babel-runtime/helpers/create-class":23,"babel-runtime/helpers/get":24,"babel-runtime/helpers/inherits":25,"babel-runtime/helpers/interop-require-default":26}],7:[function(require,module,exports){
 'use strict';
 
 var _inherits = require('babel-runtime/helpers/inherits')['default'];
@@ -590,13 +592,13 @@ var Identifier = (function (_RxNode) {
   _inherits(Identifier, _RxNode);
 
   _createClass(Identifier, [{
-    key: 'evaluate',
+    key: '_evaluate',
 
     /**
      * @param {Observable} context
      * @returns {Observable}
      */
-    value: function evaluate(context) {
+    value: function _evaluate(context) {
       var _this = this;
 
       return _rxnode2['default'].toObservable(context).filter(function (ctx) {
@@ -614,7 +616,7 @@ var Identifier = (function (_RxNode) {
 exports['default'] = Identifier;
 module.exports = exports['default'];
 
-},{"./rxnode":14,"babel-runtime/core-js/object/define-property":20,"babel-runtime/helpers/class-call-check":22,"babel-runtime/helpers/create-class":23,"babel-runtime/helpers/get":24,"babel-runtime/helpers/inherits":25,"babel-runtime/helpers/interop-require-default":26}],8:[function(require,module,exports){
+},{"./rxnode":14,"babel-runtime/core-js/object/define-property":19,"babel-runtime/helpers/class-call-check":22,"babel-runtime/helpers/create-class":23,"babel-runtime/helpers/get":24,"babel-runtime/helpers/inherits":25,"babel-runtime/helpers/interop-require-default":26}],8:[function(require,module,exports){
 'use strict';
 
 var _Object$defineProperty = require('babel-runtime/core-js/object/define-property')['default'];
@@ -692,7 +694,7 @@ _Object$assign(nodes, { RxNode: _rxnode2['default'], ExpressionStatement: _expre
   Property: _property2['default'], Identifier: _identifier2['default'], Literal: _literal2['default'] });
 module.exports = exports['default'];
 
-},{"./array-expression":1,"./arrow-function-expression":2,"./binary-expression":3,"./call-expression":4,"./conditional-expression":5,"./expression-statement":6,"./identifier":7,"./literal":9,"./logical-expression":10,"./member-expression":11,"./object-expression":12,"./property":13,"./rxnode":14,"./unary-expression":15,"babel-runtime/core-js/object/assign":18,"babel-runtime/core-js/object/define-property":20,"babel-runtime/helpers/interop-require-default":26}],9:[function(require,module,exports){
+},{"./array-expression":1,"./arrow-function-expression":2,"./binary-expression":3,"./call-expression":4,"./conditional-expression":5,"./expression-statement":6,"./identifier":7,"./literal":9,"./logical-expression":10,"./member-expression":11,"./object-expression":12,"./property":13,"./rxnode":14,"./unary-expression":15,"babel-runtime/core-js/object/assign":17,"babel-runtime/core-js/object/define-property":19,"babel-runtime/helpers/interop-require-default":26}],9:[function(require,module,exports){
 'use strict';
 
 var _inherits = require('babel-runtime/helpers/inherits')['default'];
@@ -742,13 +744,13 @@ var Literal = (function (_RxNode) {
   _inherits(Literal, _RxNode);
 
   _createClass(Literal, [{
-    key: 'evaluate',
+    key: '_evaluate',
 
     /**
      * @param {Observable} context
      * @returns {Observable}
      */
-    value: function evaluate(observable) {
+    value: function _evaluate(context) {
       return _rx2['default'].Observable.just(this.value);
     }
   }]);
@@ -759,7 +761,7 @@ var Literal = (function (_RxNode) {
 exports['default'] = Literal;
 module.exports = exports['default'];
 
-},{"./rxnode":14,"babel-runtime/core-js/object/define-property":20,"babel-runtime/helpers/class-call-check":22,"babel-runtime/helpers/create-class":23,"babel-runtime/helpers/get":24,"babel-runtime/helpers/inherits":25,"babel-runtime/helpers/interop-require-default":26,"rx":54}],10:[function(require,module,exports){
+},{"./rxnode":14,"babel-runtime/core-js/object/define-property":19,"babel-runtime/helpers/class-call-check":22,"babel-runtime/helpers/create-class":23,"babel-runtime/helpers/get":24,"babel-runtime/helpers/inherits":25,"babel-runtime/helpers/interop-require-default":26,"rx":55}],10:[function(require,module,exports){
 'use strict';
 
 var _inherits = require('babel-runtime/helpers/inherits')['default'];
@@ -795,6 +797,8 @@ var andOp = function andOp(a, b) {
   return a && b;
 };
 
+var id = 1;
+
 /**
  *
  */
@@ -809,6 +813,7 @@ var LogicalExpression = (function (_RxNode) {
     _classCallCheck(this, LogicalExpression);
 
     _get(Object.getPrototypeOf(LogicalExpression.prototype), 'constructor', this).call(this, options);
+    this.id = id++;
     this.operator = config.operator;
     this.left = _rxnode2['default'].build(config.left, options);
     this.right = _rxnode2['default'].build(config.right, options);
@@ -817,15 +822,27 @@ var LogicalExpression = (function (_RxNode) {
   _inherits(LogicalExpression, _RxNode);
 
   _createClass(LogicalExpression, [{
-    key: 'evaluate',
+    key: '_evaluate',
 
     /**
      * @param {Observable} context
      * @returns {Observable}
      */
-    value: function evaluate(context) {
-      var operation = this.operator === '||' ? orOp : this.operator === '&&' ? andOp : null;
-      return _rx2['default'].Observable.combineLatest(this.left.evaluate(context), this.right.evaluate(context), operation).distinctUntilChanged();
+    value: function _evaluate(context) {
+      var left = this.left.evaluate(context); //.do((left) => console.log(this.id+':Left:', left));
+      var right = this.right.evaluate(context); //.do((right) => console.log(this.id+':Right:', right));
+      return (this.operator === '||' ? left.distinctUntilChanged(function (v) {
+        return v || false;
+      }).flatMapLatest(function (left) {
+        return left ? _rx2['default'].Observable['return'](left) : right;
+      }) : left.distinctUntilChanged(function (v) {
+        return v && true;
+      }).flatMapLatest(function (left) {
+        return !left ? _rx2['default'].Observable['return'](left) : right;
+      })).merge(right.filter(function () {
+        return false;
+      })); // result should depend on right, but not be affected
+      // .do((v) => console.log(this.id+':Result:', v));
     }
   }]);
 
@@ -835,7 +852,7 @@ var LogicalExpression = (function (_RxNode) {
 exports['default'] = LogicalExpression;
 module.exports = exports['default'];
 
-},{"./rxnode":14,"babel-runtime/core-js/object/define-property":20,"babel-runtime/helpers/class-call-check":22,"babel-runtime/helpers/create-class":23,"babel-runtime/helpers/get":24,"babel-runtime/helpers/inherits":25,"babel-runtime/helpers/interop-require-default":26,"rx":54}],11:[function(require,module,exports){
+},{"./rxnode":14,"babel-runtime/core-js/object/define-property":19,"babel-runtime/helpers/class-call-check":22,"babel-runtime/helpers/create-class":23,"babel-runtime/helpers/get":24,"babel-runtime/helpers/inherits":25,"babel-runtime/helpers/interop-require-default":26,"rx":55}],11:[function(require,module,exports){
 'use strict';
 
 var _inherits = require('babel-runtime/helpers/inherits')['default'];
@@ -901,16 +918,16 @@ var MemberExpression = (function (_RxNode) {
         });
       }).flatMap(function (ret) {
         return ret;
-      });
+      }).shareReplay(1);
     }
   }, {
-    key: 'evaluate',
+    key: '_evaluate',
 
     /**
      * @param {Observable} context
      * @returns {Observable}
      */
-    value: function evaluate(context) {
+    value: function _evaluate(context) {
       return this.evaluateMember(context).map(function (ret) {
         return ret.property;
       });
@@ -923,7 +940,7 @@ var MemberExpression = (function (_RxNode) {
 exports['default'] = MemberExpression;
 module.exports = exports['default'];
 
-},{"./rxnode":14,"babel-runtime/core-js/object/define-property":20,"babel-runtime/helpers/class-call-check":22,"babel-runtime/helpers/create-class":23,"babel-runtime/helpers/get":24,"babel-runtime/helpers/inherits":25,"babel-runtime/helpers/interop-require-default":26,"rx":54}],12:[function(require,module,exports){
+},{"./rxnode":14,"babel-runtime/core-js/object/define-property":19,"babel-runtime/helpers/class-call-check":22,"babel-runtime/helpers/create-class":23,"babel-runtime/helpers/get":24,"babel-runtime/helpers/inherits":25,"babel-runtime/helpers/interop-require-default":26,"rx":55}],12:[function(require,module,exports){
 'use strict';
 
 var _inherits = require('babel-runtime/helpers/inherits')['default'];
@@ -976,13 +993,13 @@ var ObjectExpression = (function (_RxNode) {
   _inherits(ObjectExpression, _RxNode);
 
   _createClass(ObjectExpression, [{
-    key: 'evaluate',
+    key: '_evaluate',
 
     /**
      * @param {Observable} context
      * @returns {Observable}
      */
-    value: function evaluate(context) {
+    value: function _evaluate(context) {
       var _Rx$Observable;
 
       var props = this.properties.map(function (prop) {
@@ -1008,7 +1025,7 @@ var ObjectExpression = (function (_RxNode) {
 exports['default'] = ObjectExpression;
 module.exports = exports['default'];
 
-},{"./rxnode":14,"babel-runtime/core-js/object/define-property":20,"babel-runtime/helpers/class-call-check":22,"babel-runtime/helpers/create-class":23,"babel-runtime/helpers/get":24,"babel-runtime/helpers/inherits":25,"babel-runtime/helpers/interop-require-default":26,"babel-runtime/helpers/to-consumable-array":27,"rx":54}],13:[function(require,module,exports){
+},{"./rxnode":14,"babel-runtime/core-js/object/define-property":19,"babel-runtime/helpers/class-call-check":22,"babel-runtime/helpers/create-class":23,"babel-runtime/helpers/get":24,"babel-runtime/helpers/inherits":25,"babel-runtime/helpers/interop-require-default":26,"babel-runtime/helpers/to-consumable-array":27,"rx":55}],13:[function(require,module,exports){
 'use strict';
 
 var _inherits = require('babel-runtime/helpers/inherits')['default'];
@@ -1061,13 +1078,13 @@ var Property = (function (_RxNode) {
   _inherits(Property, _RxNode);
 
   _createClass(Property, [{
-    key: 'evaluate',
+    key: '_evaluate',
 
     /**
      * @param {Observable} context
      * @returns {Observable}
      */
-    value: function evaluate(context) {
+    value: function _evaluate(context) {
       var _this = this;
 
       return this.value.evaluate(context).map(function (value) {
@@ -1082,7 +1099,7 @@ var Property = (function (_RxNode) {
 exports['default'] = Property;
 module.exports = exports['default'];
 
-},{"./rxnode":14,"babel-runtime/core-js/object/define-property":20,"babel-runtime/helpers/class-call-check":22,"babel-runtime/helpers/create-class":23,"babel-runtime/helpers/get":24,"babel-runtime/helpers/inherits":25,"babel-runtime/helpers/interop-require-default":26,"rx":54}],14:[function(require,module,exports){
+},{"./rxnode":14,"babel-runtime/core-js/object/define-property":19,"babel-runtime/helpers/class-call-check":22,"babel-runtime/helpers/create-class":23,"babel-runtime/helpers/get":24,"babel-runtime/helpers/inherits":25,"babel-runtime/helpers/interop-require-default":26,"rx":55}],14:[function(require,module,exports){
 'use strict';
 
 var _createClass = require('babel-runtime/helpers/create-class')['default'];
@@ -1092,6 +1109,8 @@ var _classCallCheck = require('babel-runtime/helpers/class-call-check')['default
 var _toConsumableArray = require('babel-runtime/helpers/to-consumable-array')['default'];
 
 var _Object$defineProperty = require('babel-runtime/core-js/object/define-property')['default'];
+
+var _Object$keys = require('babel-runtime/core-js/object/keys')['default'];
 
 var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
 
@@ -1132,14 +1151,23 @@ var RxNode = (function () {
 
   _createClass(RxNode, [{
     key: 'evaluate',
-    value: function evaluate(config) {
+    value: function evaluate() {
+      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      return this._evaluate.apply(this, args).shareReplay(1);
+    }
+  }, {
+    key: '_evaluate',
+    value: function _evaluate(context) {
       throw new Error('evaluate() should be implemented in subclass.');
     }
   }, {
     key: 'log',
     value: function log() {
-      for (var _len = arguments.length, msg = Array(_len), _key = 0; _key < _len; _key++) {
-        msg[_key] = arguments[_key];
+      for (var _len2 = arguments.length, msg = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        msg[_key2] = arguments[_key2];
       }
 
       if (this._debug) {
@@ -1209,8 +1237,8 @@ var RxNode = (function () {
           return RxNode.combineLatestRecursive(elem);
         });
         return (_Rx$Observable = _rx2['default'].Observable).combineLatest.apply(_Rx$Observable, _toConsumableArray(elements).concat([function () {
-          for (var _len2 = arguments.length, elements = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-            elements[_key2] = arguments[_key2];
+          for (var _len3 = arguments.length, elements = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+            elements[_key3] = arguments[_key3];
           }
 
           return elements;
@@ -1218,23 +1246,16 @@ var RxNode = (function () {
       } else if (isObject(value) && !RxNode.isObservable(value) && !RxNode.isPromiseLike(value)) {
         var _Rx$Observable2;
 
-        var keys = [];
-        var members = [];
-        for (var key in value) {
-          keys.push(key);
-          members.push(RxNode.combineLatestRecursive(value[key]));
-        }
-        return (_Rx$Observable2 = _rx2['default'].Observable).combineLatest.apply(_Rx$Observable2, members.concat([function () {
-          for (var _len3 = arguments.length, members = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
-            members[_key3] = arguments[_key3];
-          }
-
-          var object = {};
-          keys.forEach(function (key, i) {
-            object[key] = members[i];
+        var members = _Object$keys(value).map(function (key) {
+          return RxNode.combineLatestRecursive(value[key]).map(function (value) {
+            return { key: key, value: value };
           });
+        });
+        var object = {};
+        return (_Rx$Observable2 = _rx2['default'].Observable).merge.apply(_Rx$Observable2, _toConsumableArray(members)).map(function (member) {
+          object[member.key] = member.value;
           return object;
-        }]));
+        });
       } else {
         return RxNode.toObservable(value);
       }
@@ -1247,7 +1268,7 @@ var RxNode = (function () {
 exports['default'] = RxNode;
 module.exports = exports['default'];
 
-},{"./":8,"babel-runtime/core-js/object/define-property":20,"babel-runtime/helpers/class-call-check":22,"babel-runtime/helpers/create-class":23,"babel-runtime/helpers/interop-require-default":26,"babel-runtime/helpers/to-consumable-array":27,"rx":54}],15:[function(require,module,exports){
+},{"./":8,"babel-runtime/core-js/object/define-property":19,"babel-runtime/core-js/object/keys":21,"babel-runtime/helpers/class-call-check":22,"babel-runtime/helpers/create-class":23,"babel-runtime/helpers/interop-require-default":26,"babel-runtime/helpers/to-consumable-array":27,"rx":55}],15:[function(require,module,exports){
 'use strict';
 
 var _inherits = require('babel-runtime/helpers/inherits')['default'];
@@ -1321,13 +1342,13 @@ var UnaryExpression = (function (_RxNode) {
   _inherits(UnaryExpression, _RxNode);
 
   _createClass(UnaryExpression, [{
-    key: 'evaluate',
+    key: '_evaluate',
 
     /**
      * @param {Observable} context
      * @returns {Observable}
      */
-    value: function evaluate(context) {
+    value: function _evaluate(context) {
       var operation = UNARY_OPERATIONS[this.operator];
       return this.argument.evaluate(context).map(operation);
     }
@@ -1339,41 +1360,19 @@ var UnaryExpression = (function (_RxNode) {
 exports['default'] = UnaryExpression;
 module.exports = exports['default'];
 
-},{"./rxnode":14,"babel-runtime/core-js/object/define-property":20,"babel-runtime/helpers/class-call-check":22,"babel-runtime/helpers/create-class":23,"babel-runtime/helpers/get":24,"babel-runtime/helpers/inherits":25,"babel-runtime/helpers/interop-require-default":26,"rx":54}],16:[function(require,module,exports){
-'use strict';
-
-var _classCallCheck = require('babel-runtime/helpers/class-call-check')['default'];
-
-var _Object$defineProperty = require('babel-runtime/core-js/object/define-property')['default'];
-
-var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
-
-_Object$defineProperty(exports, '__esModule', {
-  value: true
-});
-
-var _rxpression = require('./rxpression');
-
-var _rxpression2 = _interopRequireDefault(_rxpression);
-
-var Scope = function Scope() {
-  _classCallCheck(this, Scope);
-};
-
-exports['default'] = Scope;
-module.exports = exports['default'];
-
-},{"./rxpression":undefined,"babel-runtime/core-js/object/define-property":20,"babel-runtime/helpers/class-call-check":22,"babel-runtime/helpers/interop-require-default":26}],17:[function(require,module,exports){
+},{"./rxnode":14,"babel-runtime/core-js/object/define-property":19,"babel-runtime/helpers/class-call-check":22,"babel-runtime/helpers/create-class":23,"babel-runtime/helpers/get":24,"babel-runtime/helpers/inherits":25,"babel-runtime/helpers/interop-require-default":26,"rx":55}],16:[function(require,module,exports){
 module.exports = { "default": require("core-js/library/fn/array/from"), __esModule: true };
-},{"core-js/library/fn/array/from":28}],18:[function(require,module,exports){
+},{"core-js/library/fn/array/from":28}],17:[function(require,module,exports){
 module.exports = { "default": require("core-js/library/fn/object/assign"), __esModule: true };
-},{"core-js/library/fn/object/assign":29}],19:[function(require,module,exports){
+},{"core-js/library/fn/object/assign":29}],18:[function(require,module,exports){
 module.exports = { "default": require("core-js/library/fn/object/create"), __esModule: true };
-},{"core-js/library/fn/object/create":30}],20:[function(require,module,exports){
+},{"core-js/library/fn/object/create":30}],19:[function(require,module,exports){
 module.exports = { "default": require("core-js/library/fn/object/define-property"), __esModule: true };
-},{"core-js/library/fn/object/define-property":31}],21:[function(require,module,exports){
+},{"core-js/library/fn/object/define-property":31}],20:[function(require,module,exports){
 module.exports = { "default": require("core-js/library/fn/object/get-own-property-descriptor"), __esModule: true };
-},{"core-js/library/fn/object/get-own-property-descriptor":32}],22:[function(require,module,exports){
+},{"core-js/library/fn/object/get-own-property-descriptor":32}],21:[function(require,module,exports){
+module.exports = { "default": require("core-js/library/fn/object/keys"), __esModule: true };
+},{"core-js/library/fn/object/keys":33}],22:[function(require,module,exports){
 "use strict";
 
 exports["default"] = function (instance, Constructor) {
@@ -1408,7 +1407,7 @@ exports["default"] = (function () {
 })();
 
 exports.__esModule = true;
-},{"babel-runtime/core-js/object/define-property":20}],24:[function(require,module,exports){
+},{"babel-runtime/core-js/object/define-property":19}],24:[function(require,module,exports){
 "use strict";
 
 var _Object$getOwnPropertyDescriptor = require("babel-runtime/core-js/object/get-own-property-descriptor")["default"];
@@ -1452,7 +1451,7 @@ exports["default"] = function get(_x, _x2, _x3) {
 };
 
 exports.__esModule = true;
-},{"babel-runtime/core-js/object/get-own-property-descriptor":21}],25:[function(require,module,exports){
+},{"babel-runtime/core-js/object/get-own-property-descriptor":20}],25:[function(require,module,exports){
 "use strict";
 
 var _Object$create = require("babel-runtime/core-js/object/create")["default"];
@@ -1474,7 +1473,7 @@ exports["default"] = function (subClass, superClass) {
 };
 
 exports.__esModule = true;
-},{"babel-runtime/core-js/object/create":19}],26:[function(require,module,exports){
+},{"babel-runtime/core-js/object/create":18}],26:[function(require,module,exports){
 "use strict";
 
 exports["default"] = function (obj) {
@@ -1500,30 +1499,33 @@ exports["default"] = function (arr) {
 };
 
 exports.__esModule = true;
-},{"babel-runtime/core-js/array/from":17}],28:[function(require,module,exports){
+},{"babel-runtime/core-js/array/from":16}],28:[function(require,module,exports){
 require('../../modules/es6.string.iterator');
 require('../../modules/es6.array.from');
 module.exports = require('../../modules/$').core.Array.from;
-},{"../../modules/$":44,"../../modules/es6.array.from":48,"../../modules/es6.string.iterator":51}],29:[function(require,module,exports){
+},{"../../modules/$":45,"../../modules/es6.array.from":49,"../../modules/es6.string.iterator":52}],29:[function(require,module,exports){
 require('../../modules/es6.object.assign');
 module.exports = require('../../modules/$').core.Object.assign;
-},{"../../modules/$":44,"../../modules/es6.object.assign":49}],30:[function(require,module,exports){
+},{"../../modules/$":45,"../../modules/es6.object.assign":50}],30:[function(require,module,exports){
 var $ = require('../../modules/$');
 module.exports = function create(P, D){
   return $.create(P, D);
 };
-},{"../../modules/$":44}],31:[function(require,module,exports){
+},{"../../modules/$":45}],31:[function(require,module,exports){
 var $ = require('../../modules/$');
 module.exports = function defineProperty(it, key, desc){
   return $.setDesc(it, key, desc);
 };
-},{"../../modules/$":44}],32:[function(require,module,exports){
+},{"../../modules/$":45}],32:[function(require,module,exports){
 var $ = require('../../modules/$');
 require('../../modules/es6.object.statics-accept-primitives');
 module.exports = function getOwnPropertyDescriptor(it, key){
   return $.getDesc(it, key);
 };
-},{"../../modules/$":44,"../../modules/es6.object.statics-accept-primitives":50}],33:[function(require,module,exports){
+},{"../../modules/$":45,"../../modules/es6.object.statics-accept-primitives":51}],33:[function(require,module,exports){
+require('../../modules/es6.object.statics-accept-primitives');
+module.exports = require('../../modules/$').core.Object.keys;
+},{"../../modules/$":45,"../../modules/es6.object.statics-accept-primitives":51}],34:[function(require,module,exports){
 var $ = require('./$');
 function assert(condition, msg1, msg2){
   if(!condition)throw TypeError(msg2 ? msg1 + msg2 : msg1);
@@ -1542,7 +1544,7 @@ assert.inst = function(it, Constructor, name){
   return it;
 };
 module.exports = assert;
-},{"./$":44}],34:[function(require,module,exports){
+},{"./$":45}],35:[function(require,module,exports){
 var $        = require('./$')
   , enumKeys = require('./$.enum-keys');
 // 19.1.2.1 Object.assign(target, source, ...)
@@ -1562,7 +1564,7 @@ module.exports = Object.assign || function assign(target, source){
   }
   return T;
 };
-},{"./$":44,"./$.enum-keys":38}],35:[function(require,module,exports){
+},{"./$":45,"./$.enum-keys":39}],36:[function(require,module,exports){
 var $        = require('./$')
   , TAG      = require('./$.wks')('toStringTag')
   , toString = {}.toString;
@@ -1578,7 +1580,7 @@ cof.set = function(it, tag, stat){
   if(it && !$.has(it = stat ? it : it.prototype, TAG))$.hide(it, TAG, tag);
 };
 module.exports = cof;
-},{"./$":44,"./$.wks":47}],36:[function(require,module,exports){
+},{"./$":45,"./$.wks":48}],37:[function(require,module,exports){
 // Optional / simple context binding
 var assertFunction = require('./$.assert').fn;
 module.exports = function(fn, that, length){
@@ -1598,7 +1600,7 @@ module.exports = function(fn, that, length){
       return fn.apply(that, arguments);
     };
 };
-},{"./$.assert":33}],37:[function(require,module,exports){
+},{"./$.assert":34}],38:[function(require,module,exports){
 var $          = require('./$')
   , global     = $.g
   , core       = $.core
@@ -1645,7 +1647,7 @@ function $def(type, name, source){
   }
 }
 module.exports = $def;
-},{"./$":44}],38:[function(require,module,exports){
+},{"./$":45}],39:[function(require,module,exports){
 var $ = require('./$');
 module.exports = function(it){
   var keys       = $.getKeys(it)
@@ -1656,13 +1658,13 @@ module.exports = function(it){
   });
   return keys;
 };
-},{"./$":44}],39:[function(require,module,exports){
+},{"./$":45}],40:[function(require,module,exports){
 module.exports = function($){
   $.FW   = false;
   $.path = $.core;
   return $;
 };
-},{}],40:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 var assertObject = require('./$.assert').obj;
 function close(iterator){
   var ret = iterator['return'];
@@ -1678,7 +1680,7 @@ function call(iterator, fn, value, entries){
 }
 call.close = close;
 module.exports = call;
-},{"./$.assert":33}],41:[function(require,module,exports){
+},{"./$.assert":34}],42:[function(require,module,exports){
 var $def            = require('./$.def')
   , $               = require('./$')
   , cof             = require('./$.cof')
@@ -1728,7 +1730,7 @@ module.exports = function(Base, NAME, Constructor, next, DEFAULT, IS_SET, FORCE)
     } else $def($def.P + $def.F * $iter.BUGGY, NAME, methods);
   }
 };
-},{"./$":44,"./$.cof":35,"./$.def":37,"./$.iter":43,"./$.wks":47}],42:[function(require,module,exports){
+},{"./$":45,"./$.cof":36,"./$.def":38,"./$.iter":44,"./$.wks":48}],43:[function(require,module,exports){
 var SYMBOL_ITERATOR = require('./$.wks')('iterator')
   , SAFE_CLOSING    = false;
 try {
@@ -1748,7 +1750,7 @@ module.exports = function(exec){
   } catch(e){ /* empty */ }
   return safe;
 };
-},{"./$.wks":47}],43:[function(require,module,exports){
+},{"./$.wks":48}],44:[function(require,module,exports){
 'use strict';
 var $                 = require('./$')
   , cof               = require('./$.cof')
@@ -1790,7 +1792,7 @@ module.exports = {
     cof.set(Constructor, NAME + ' Iterator');
   }
 };
-},{"./$":44,"./$.assert":33,"./$.cof":35,"./$.wks":47}],44:[function(require,module,exports){
+},{"./$":45,"./$.assert":34,"./$.cof":36,"./$.wks":48}],45:[function(require,module,exports){
 'use strict';
 var global = typeof self != 'undefined' ? self : Function('return this')()
   , core   = {}
@@ -1894,7 +1896,7 @@ var $ = module.exports = require('./$.fw')({
 /* eslint-disable no-undef */
 if(typeof __e != 'undefined')__e = core;
 if(typeof __g != 'undefined')__g = global;
-},{"./$.fw":39}],45:[function(require,module,exports){
+},{"./$.fw":40}],46:[function(require,module,exports){
 // true  -> String#at
 // false -> String#codePointAt
 var $ = require('./$');
@@ -1912,21 +1914,21 @@ module.exports = function(TO_STRING){
         : TO_STRING ? s.slice(i, i + 2) : (a - 0xd800 << 10) + (b - 0xdc00) + 0x10000;
   };
 };
-},{"./$":44}],46:[function(require,module,exports){
+},{"./$":45}],47:[function(require,module,exports){
 var sid = 0;
 function uid(key){
   return 'Symbol(' + key + ')_' + (++sid + Math.random()).toString(36);
 }
 uid.safe = require('./$').g.Symbol || uid;
 module.exports = uid;
-},{"./$":44}],47:[function(require,module,exports){
+},{"./$":45}],48:[function(require,module,exports){
 var global = require('./$').g
   , store  = {};
 module.exports = function(name){
   return store[name] || (store[name] =
     global.Symbol && global.Symbol[name] || require('./$.uid').safe('Symbol.' + name));
 };
-},{"./$":44,"./$.uid":46}],48:[function(require,module,exports){
+},{"./$":45,"./$.uid":47}],49:[function(require,module,exports){
 var $     = require('./$')
   , ctx   = require('./$.ctx')
   , $def  = require('./$.def')
@@ -1959,11 +1961,11 @@ $def($def.S + $def.F * !require('./$.iter-detect')(function(iter){ Array.from(it
     return result;
   }
 });
-},{"./$":44,"./$.ctx":36,"./$.def":37,"./$.iter":43,"./$.iter-call":40,"./$.iter-detect":42}],49:[function(require,module,exports){
+},{"./$":45,"./$.ctx":37,"./$.def":38,"./$.iter":44,"./$.iter-call":41,"./$.iter-detect":43}],50:[function(require,module,exports){
 // 19.1.3.1 Object.assign(target, source)
 var $def = require('./$.def');
 $def($def.S, 'Object', {assign: require('./$.assign')});
-},{"./$.assign":34,"./$.def":37}],50:[function(require,module,exports){
+},{"./$.assign":35,"./$.def":38}],51:[function(require,module,exports){
 var $        = require('./$')
   , $def     = require('./$.def')
   , isObject = $.isObject
@@ -2002,7 +2004,7 @@ wrapObjectMethod('getOwnPropertyDescriptor', 4);
 wrapObjectMethod('getPrototypeOf', 5);
 wrapObjectMethod('keys');
 wrapObjectMethod('getOwnPropertyNames');
-},{"./$":44,"./$.def":37}],51:[function(require,module,exports){
+},{"./$":45,"./$.def":38}],52:[function(require,module,exports){
 var set   = require('./$').set
   , $at   = require('./$.string-at')(true)
   , ITER  = require('./$.uid').safe('iter')
@@ -2023,7 +2025,7 @@ require('./$.iter-define')(String, 'String', function(iterated){
   iter.i += point.length;
   return step(0, point);
 });
-},{"./$":44,"./$.iter":43,"./$.iter-define":41,"./$.string-at":45,"./$.uid":46}],52:[function(require,module,exports){
+},{"./$":45,"./$.iter":44,"./$.iter-define":42,"./$.string-at":46,"./$.uid":47}],53:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -2115,7 +2117,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],53:[function(require,module,exports){
+},{}],54:[function(require,module,exports){
 /*
   Copyright (C) 2013 Ariya Hidayat <ariya.hidayat@gmail.com>
   Copyright (C) 2013 Thaddee Tyl <thaddee.tyl@gmail.com>
@@ -7438,7 +7440,7 @@ process.umask = function() { return 0; };
 }));
 /* vim: set sw=4 ts=4 et tw=80 : */
 
-},{}],54:[function(require,module,exports){
+},{}],55:[function(require,module,exports){
 (function (process,global){
 // Copyright (c) Microsoft Open Technologies, Inc. All rights reserved. See License.txt in the project root for license information.
 
@@ -17855,7 +17857,7 @@ process.umask = function() { return 0; };
 }.call(this));
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"_process":52}],55:[function(require,module,exports){
+},{"_process":53}],56:[function(require,module,exports){
 'use strict';
 
 var _createClass = require('babel-runtime/helpers/create-class')['default'];
@@ -17870,8 +17872,6 @@ _Object$defineProperty(exports, '__esModule', {
   value: true
 });
 
-exports.createScope = createScope;
-
 var _esprima = require('esprima');
 
 var _esprima2 = _interopRequireDefault(_esprima);
@@ -17881,10 +17881,6 @@ var _rx = require('rx');
 var _rx2 = _interopRequireDefault(_rx);
 
 var _nodes = require('./nodes');
-
-var _scope = require('./scope');
-
-var _scope2 = _interopRequireDefault(_scope);
 
 'use strict';
 
@@ -17931,7 +17927,7 @@ var Rxpression = (function () {
         return _nodes.RxNode.combineLatestRecursive(ret);
       }).flatMap(function (ret) {
         return ret;
-      });
+      }).shareReplay(1);
     }
   }]);
 
@@ -17940,10 +17936,6 @@ var Rxpression = (function () {
 
 exports['default'] = Rxpression;
 ;
-
-function createScope() {
-  return new _scope2['default']();
-}
 
 function createExpressionSyntaxError(expr, error) {
   var message;
@@ -17962,5 +17954,7 @@ function createExpressionSyntaxError(expr, error) {
   err.name = 'Expression Syntax Error';
   return err;
 }
+module.exports = exports['default'];
 
-},{"./nodes":8,"./scope":16,"babel-runtime/core-js/object/define-property":20,"babel-runtime/helpers/class-call-check":22,"babel-runtime/helpers/create-class":23,"babel-runtime/helpers/interop-require-default":26,"esprima":53,"rx":54}]},{},[55]);
+},{"./nodes":8,"babel-runtime/core-js/object/define-property":19,"babel-runtime/helpers/class-call-check":22,"babel-runtime/helpers/create-class":23,"babel-runtime/helpers/interop-require-default":26,"esprima":54,"rx":55}]},{},[56])(56)
+});
