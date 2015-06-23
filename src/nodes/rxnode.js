@@ -83,20 +83,17 @@ export default class RxNode {
     if (isArray(value)) {
       var elements = value.map(elem => RxNode.combineLatestRecursive(elem));
       return Rx.Observable.combineLatest(...elements, (...elements) => {
-        return elements
+        return elements;
       });
     } else if (isObject(value) && !RxNode.isObservable(value) && !RxNode.isPromiseLike(value)) {
-      var keys = [];
-      var members = [];
-      for (var key in value) {
-        keys.push(key);
-        members.push(RxNode.combineLatestRecursive(value[key]));
-      }
-      return Rx.Observable.combineLatest(...members, (...members) => {
-        var object = {};
-        keys.forEach((key, i) => {
-          object[key] = members[i];
+      var members = Object.keys(value).map((key) => {
+        return RxNode.combineLatestRecursive(value[key]).map((value) => {
+          return { key, value };
         });
+      });
+      var object = {};
+      return Rx.Observable.merge(...members).map((member) => {
+        object[member.key] = member.value;
         return object;
       });
     } else {

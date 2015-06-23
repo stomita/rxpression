@@ -1,0 +1,22 @@
+#!/usr/bin/env node
+var express = require('express');
+var enchilada = require('enchilada');
+var babelify = require('babelify');
+var path = require('path');
+var rootPath = path.join(__dirname, '../');
+
+var port = process.env.PORT || 9001;
+var server = express();
+server.use(enchilada({
+  src: rootPath,
+  transforms: [
+    babelify.configure({
+      optional: [ "runtime" ]
+    })
+  ],
+  debug: true
+}));
+server.use(express.static(rootPath));
+server.listen(port, function() {
+  console.log('App server started : http://localhost:' + port);
+});
