@@ -22,7 +22,7 @@ export default class CallExpression extends RxNode {
    * @param {Observable} context
    * @returns {Observable}
    */
-  evaluate(context) {
+  _evaluate(context) {
     var callee;
     if (this.callee instanceof MemberExpression) {
       callee = this.callee.evaluateMember(context).map(member => {

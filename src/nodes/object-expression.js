@@ -20,7 +20,7 @@ export default class ObjectExpression extends RxNode {
    * @param {Observable} context
    * @returns {Observable}
    */
-  evaluate(context) {
+  _evaluate(context) {
     var props = this.properties.map( (prop) => prop.evaluate(context) );
     return Rx.Observable.combineLatest(...props, (...props) => {
       var obj = {};

@@ -29,14 +29,14 @@ export default class MemberExpression extends RxNode {
       return RxNode.toObservable(object[property]).map(p => {
         return { object: object, property: p };
       });
-    }).flatMap(ret => ret);
+    }).flatMap(ret => ret).shareReplay(1);
   }
 
   /**
    * @param {Observable} context
    * @returns {Observable}
    */
-  evaluate(context) {
+  _evaluate(context) {
     return this.evaluateMember(context).map(ret => ret.property);
   }
 

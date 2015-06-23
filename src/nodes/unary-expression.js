@@ -37,7 +37,7 @@ export default class UnaryExpression extends RxNode {
    * @param {Observable} context
    * @returns {Observable}
    */
-  evaluate(context) {
+  _evaluate(context) {
     var operation = UNARY_OPERATIONS[this.operator];
     return this.argument.evaluate(context).map(operation);
   }

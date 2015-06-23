@@ -22,7 +22,7 @@ export default class ArrowFunctionExpression extends RxNode {
    * @param {Observable} context
    * @returns {Observable}
    */
-  evaluate(context) {
+  _evaluate(context) {
     var defaults = this.defaults.map(value => value.evaluate(context));
     return RxNode.toObservable(context).map((context) => {
       return (...params) => {

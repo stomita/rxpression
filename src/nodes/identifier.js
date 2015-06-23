@@ -19,7 +19,7 @@ export default class Identifier extends RxNode {
    * @param {Observable} context
    * @returns {Observable}
    */
-  evaluate(context) {
+  _evaluate(context) {
     return RxNode.toObservable(context).filter(ctx => {
       return ctx;
     }).flatMap(ctx => {

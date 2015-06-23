@@ -22,15 +22,18 @@ export default class ConditionalExpression extends RxNode {
    * @param {Observable} context
    * @returns {Observable}
    */
-  evaluate(context) {
-    return Rx.Observable.combineLatest(
-      this.test.evaluate(context),
-      this.consequent.evaluate(context),
-      this.alternate.evaluate(context),
-      (testResult, consequentResult, alternateResult) => {
-        return testResult ? consequentResult : alternateResult;
-      }
-    ).distinctUntilChanged();
+  _evaluate(context) {
+    let testResult = this.test.evaluate(context);
+    let testNegate = testResult.map((t) => !t);
+    return Rx.Observable.merge(
+      this.consequent.evaluate(context)
+        .pausableBuffered(testResult)
+        .debounce(1)
+      ,
+      this.alternate.evaluate(context)
+        .pausableBuffered(testNegate)
+        .debounce(1)
+    );
   }
 
 }

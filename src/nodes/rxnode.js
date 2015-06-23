@@ -23,7 +23,11 @@ export default class RxNode {
     this._debug = options.debug;
   }
 
-  evaluate(config) {
+  evaluate(...args) {
+    return this._evaluate(...args).shareReplay(1);
+  }
+
+  _evaluate(context) {
     throw new Error('evaluate() should be implemented in subclass.');
   }
 

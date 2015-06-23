@@ -19,7 +19,7 @@ export default class ExpressionStatement extends RxNode {
    * @param {Observable} context
    * @returns {Observable}
    */
-  evaluate(context) {
+  _evaluate(context) {
     return this.expression.evaluate(context);
   }
 

@@ -21,7 +21,7 @@ export default class Literal extends RxNode {
    * @param {Observable} context
    * @returns {Observable}
    */
-  evaluate(observable) {
+  _evaluate(context) {
     return Rx.Observable.just(this.value);
   }
 

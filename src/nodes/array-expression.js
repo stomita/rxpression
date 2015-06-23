@@ -20,9 +20,9 @@ export default class ArrayExpression extends RxNode {
    * @param {Observable} context
    * @returns {Observable}
    */
-  evaluate(context, debug) {
+  _evaluate(context, debug) {
     var elems = this.elements.map((elem) => elem.evaluate(context, debug));
-    return Rx.Observable.combineLatest(...elems, (...elems) => elems)
+    return Rx.Observable.combineLatest(...elems, (...elems) => elems);
   }
 
 }

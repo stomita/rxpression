@@ -84,7 +84,7 @@ describe('rxpression', () => {
     var context = {
       a: Rx.Observable.interval(500).map((i) => i % 2 === 1).startWith(true).delay(150).publish(),
       b: Rx.Observable.interval(300).map((i) => i+1).startWith(0).map((i)=>'b: '+i).delay(450).publish(),
-      c: Rx.Observable.interval(250).map((i) => i+1).startWith(0).map((i)=>'c: '+i).delay(0).publish()
+      c: Rx.Observable.interval(250).map((i) => i+1).startWith(0).map((i)=>'c: '+i).delay(0).publish(),
     };
     rxpr.evaluate(context).take(6).toArray().subscribe((rets) => {
       assert.deepEqual(rets, [
@@ -112,7 +112,7 @@ describe('rxpression', () => {
     var context = {
       a : Rx.Observable.interval(500).map((i) => i % 2 === 1).startWith(true).delay(0).publish(),
       b : Rx.Observable.interval(200).map((i) => (i+1) % 3).startWith(0).delay(150).publish(),
-      c : Rx.Observable.interval(400).map((i) => i % 2 === 0 ? 'n' : 'y').startWith('y').delay(0).publish()
+      c : Rx.Observable.interval(400).map((i) => i % 2 === 0 ? 'n' : 'y').startWith('y').delay(0).publish(),
     };
     rxpr.evaluate(context).take(5).toArray().subscribe( (rets) => {
       assert.deepEqual(rets, [ true, 'n', 0, 'y', true]);
