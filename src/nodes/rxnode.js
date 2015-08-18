@@ -66,14 +66,14 @@ export default class RxNode {
    *
    */
   static isObservable(value) {
-    return typeof value === 'object' && typeof value.subscribe === 'function';
+    return typeof value === 'object' && value !== null && typeof value.subscribe === 'function';
   }
 
   /**
    *
    */
   static isPromiseLike(value) {
-    return typeof value === 'object' && typeof value.then === 'function';
+    return typeof value === 'object' && value !== null && typeof value.then === 'function';
   }
 
   /**
