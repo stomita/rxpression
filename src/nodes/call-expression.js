@@ -20,20 +20,21 @@ export default class CallExpression extends RxNode {
 
   /**
    * @param {Observable} context
+   * @param {Object} cache
    * @returns {Observable}
    */
-  _evaluate(context) {
+  _evaluate(context, cache) {
     var callee;
     if (this.callee instanceof MemberExpression) {
-      callee = this.callee.evaluateMember(context).map(member => {
+      callee = this.callee.evaluateMember(context, cache).map(member => {
         return { object: member.object, fn: member.property };
       });
     } else {
-      callee = this.callee.evaluate(context).map(callee => {
+      callee = this.callee.evaluate(context, cache).map(callee => {
         return { object: null, fn: callee };
       });
     }
-    var args = this.arguments.map((arg) => arg.evaluate(context));
+    var args = this.arguments.map((arg) => arg.evaluate(context, cache));
     return Rx.Observable.combineLatest(callee, ...args, (callee, ...args) => {
       // console.log('callee.object = ', callee.object);
       // console.log('callee.fn = ', callee.fn);

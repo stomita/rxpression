@@ -16,13 +16,20 @@ export default class Identifier extends RxNode {
   }
 
   /**
+   * @private
+   */
+  _findCacheKey() {
+    return this.name;
+  }
+
+  /**
    * @param {Observable} context
    * @returns {Observable}
    */
-  _evaluate(context) {
+  _evaluate(context, cache) {
     return RxNode.toObservable(context).filter(ctx => {
       return ctx;
-    }).flatMap(ctx => {
+    }).flatMapLatest(ctx => {
       var value = ctx[this.name];
       return RxNode.toObservable(value);
     });

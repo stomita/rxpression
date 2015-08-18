@@ -22,10 +22,11 @@ export default class Property extends RxNode {
 
   /**
    * @param {Observable} context
+   * @param {Object} cache
    * @returns {Observable}
    */
-  _evaluate(context) {
-    return this.value.evaluate(context).map( (value) => {
+  _evaluate(context, cache) {
+    return this.value.evaluate(context, cache).map( (value) => {
       return { key: this.key, value: value };
     });
   }

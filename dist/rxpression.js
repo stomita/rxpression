@@ -57,11 +57,11 @@ var ArrayExpression = (function (_RxNode) {
      * @param {Observable} context
      * @returns {Observable}
      */
-    value: function _evaluate(context, debug) {
+    value: function _evaluate(context, cache) {
       var _Rx$Observable;
 
       var elems = this.elements.map(function (elem) {
-        return elem.evaluate(context, debug);
+        return elem.evaluate(context, cache);
       });
       return (_Rx$Observable = _rx2['default'].Observable).combineLatest.apply(_Rx$Observable, _toConsumableArray(elems).concat([function () {
         for (var _len = arguments.length, elems = Array(_len), _key = 0; _key < _len; _key++) {
@@ -91,6 +91,8 @@ var _createClass = require('babel-runtime/helpers/create-class')['default'];
 var _classCallCheck = require('babel-runtime/helpers/class-call-check')['default'];
 
 var _Object$defineProperty = require('babel-runtime/core-js/object/define-property')['default'];
+
+var _Object$assign = require('babel-runtime/core-js/object/assign')['default'];
 
 var _interopRequireDefault = require('babel-runtime/helpers/interop-require-default')['default'];
 
@@ -136,13 +138,14 @@ var ArrowFunctionExpression = (function (_RxNode) {
 
     /**
      * @param {Observable} context
+     * @param {Object} cache
      * @returns {Observable}
      */
-    value: function _evaluate(context) {
+    value: function _evaluate(context, cache) {
       var _this = this;
 
       var defaults = this.defaults.map(function (value) {
-        return value.evaluate(context);
+        return value.evaluate(context, cache);
       });
       return _rxnode2['default'].toObservable(context).map(function (context) {
         return function () {
@@ -158,7 +161,7 @@ var ArrowFunctionExpression = (function (_RxNode) {
             var pvalue = params[i];
             ctx[pname] = typeof pvalue === 'undefined' || pvalue === null ? defaults[i] : pvalue;
           });
-          return _this.body.evaluate(ctx);
+          return _this.body.evaluate(ctx, _Object$assign({}, cache));
         };
       });
     }
@@ -170,7 +173,7 @@ var ArrowFunctionExpression = (function (_RxNode) {
 exports['default'] = ArrowFunctionExpression;
 module.exports = exports['default'];
 
-},{"./rxnode":14,"babel-runtime/core-js/object/define-property":19,"babel-runtime/helpers/class-call-check":22,"babel-runtime/helpers/create-class":23,"babel-runtime/helpers/get":24,"babel-runtime/helpers/inherits":25,"babel-runtime/helpers/interop-require-default":26,"rx":55}],3:[function(require,module,exports){
+},{"./rxnode":14,"babel-runtime/core-js/object/assign":17,"babel-runtime/core-js/object/define-property":19,"babel-runtime/helpers/class-call-check":22,"babel-runtime/helpers/create-class":23,"babel-runtime/helpers/get":24,"babel-runtime/helpers/inherits":25,"babel-runtime/helpers/interop-require-default":26,"rx":55}],3:[function(require,module,exports){
 'use strict';
 
 var _inherits = require('babel-runtime/helpers/inherits')['default'];
@@ -300,9 +303,9 @@ var BinaryExpression = (function (_RxNode) {
      * @param {Observable} context
      * @returns {Observable}
      */
-    value: function _evaluate(context) {
+    value: function _evaluate(context, cache) {
       var operation = BINARY_OPERATIONS[this.operator];
-      return _rx2['default'].Observable.combineLatest(this.left.evaluate(context), this.right.evaluate(context), operation);
+      return _rx2['default'].Observable.combineLatest(this.left.evaluate(context, cache), this.right.evaluate(context, cache), operation);
     }
   }]);
 
@@ -374,23 +377,24 @@ var CallExpression = (function (_RxNode) {
 
     /**
      * @param {Observable} context
+     * @param {Object} cache
      * @returns {Observable}
      */
-    value: function _evaluate(context) {
+    value: function _evaluate(context, cache) {
       var _Rx$Observable;
 
       var callee;
       if (this.callee instanceof _memberExpression2['default']) {
-        callee = this.callee.evaluateMember(context).map(function (member) {
+        callee = this.callee.evaluateMember(context, cache).map(function (member) {
           return { object: member.object, fn: member.property };
         });
       } else {
-        callee = this.callee.evaluate(context).map(function (callee) {
+        callee = this.callee.evaluate(context, cache).map(function (callee) {
           return { object: null, fn: callee };
         });
       }
       var args = this.arguments.map(function (arg) {
-        return arg.evaluate(context);
+        return arg.evaluate(context, cache);
       });
       return (_Rx$Observable = _rx2['default'].Observable).combineLatest.apply(_Rx$Observable, [callee].concat(_toConsumableArray(args), [function (callee) {
         for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
@@ -468,14 +472,15 @@ var ConditionalExpression = (function (_RxNode) {
 
     /**
      * @param {Observable} context
+     * @param {Object} cache
      * @returns {Observable}
      */
-    value: function _evaluate(context) {
-      var testResult = this.test.evaluate(context);
+    value: function _evaluate(context, cache) {
+      var testResult = this.test.evaluate(context, cache);
       var testNegate = testResult.map(function (t) {
         return !t;
       });
-      return _rx2['default'].Observable.merge(this.consequent.evaluate(context).pausableBuffered(testResult).debounce(1), this.alternate.evaluate(context).pausableBuffered(testNegate).debounce(1));
+      return _rx2['default'].Observable.merge(this.consequent.evaluate(context, cache).pausableBuffered(testResult).debounce(1), this.alternate.evaluate(context, cache).pausableBuffered(testNegate).debounce(1));
     }
   }]);
 
@@ -536,8 +541,8 @@ var ExpressionStatement = (function (_RxNode) {
      * @param {Observable} context
      * @returns {Observable}
      */
-    value: function _evaluate(context) {
-      return this.expression.evaluate(context);
+    value: function _evaluate(context, cache) {
+      return this.expression.evaluate(context, cache);
     }
   }]);
 
@@ -592,18 +597,27 @@ var Identifier = (function (_RxNode) {
   _inherits(Identifier, _RxNode);
 
   _createClass(Identifier, [{
+    key: '_findCacheKey',
+
+    /**
+     * @private
+     */
+    value: function _findCacheKey() {
+      return this.name;
+    }
+  }, {
     key: '_evaluate',
 
     /**
      * @param {Observable} context
      * @returns {Observable}
      */
-    value: function _evaluate(context) {
+    value: function _evaluate(context, cache) {
       var _this = this;
 
       return _rxnode2['default'].toObservable(context).filter(function (ctx) {
         return ctx;
-      }).flatMap(function (ctx) {
+      }).flatMapLatest(function (ctx) {
         var value = ctx[_this.name];
         return _rxnode2['default'].toObservable(value);
       });
@@ -748,9 +762,10 @@ var Literal = (function (_RxNode) {
 
     /**
      * @param {Observable} context
+     * @param {Observable} cache
      * @returns {Observable}
      */
-    value: function _evaluate(context) {
+    value: function _evaluate(context, cache) {
       return _rx2['default'].Observable.just(this.value);
     }
   }]);
@@ -797,8 +812,6 @@ var andOp = function andOp(a, b) {
   return a && b;
 };
 
-var id = 1;
-
 /**
  *
  */
@@ -813,7 +826,6 @@ var LogicalExpression = (function (_RxNode) {
     _classCallCheck(this, LogicalExpression);
 
     _get(Object.getPrototypeOf(LogicalExpression.prototype), 'constructor', this).call(this, options);
-    this.id = id++;
     this.operator = config.operator;
     this.left = _rxnode2['default'].build(config.left, options);
     this.right = _rxnode2['default'].build(config.right, options);
@@ -826,23 +838,32 @@ var LogicalExpression = (function (_RxNode) {
 
     /**
      * @param {Observable} context
+     * @param {Object} cache
      * @returns {Observable}
      */
-    value: function _evaluate(context) {
-      var left = this.left.evaluate(context); //.do((left) => console.log(this.id+':Left:', left));
-      var right = this.right.evaluate(context); //.do((right) => console.log(this.id+':Right:', right));
+    value: function _evaluate(context, cache) {
+      var _this = this;
+
+      var left = this.left.evaluate(context, cache)['do'](function (left) {
+        return _this.log('Left:', left);
+      });
+      var right = this.right.evaluate(context, cache).debounce(1) // shareReplay chaining may cause repeated phantom sequence of previously sent results, so remove them
+      ['do'](function (right) {
+        return _this.log('Right:', right);
+      });
       return (this.operator === '||' ? left.distinctUntilChanged(function (v) {
         return v || false;
-      }).flatMapLatest(function (left) {
+      }) // normalize all falsy value changes in left node to "false", remove unnecessary emission
+      .flatMapLatest(function (left) {
         return left ? _rx2['default'].Observable['return'](left) : right;
       }) : left.distinctUntilChanged(function (v) {
         return v && true;
-      }).flatMapLatest(function (left) {
+      }) // normalize all truthy value changes in left node to "true", remove unnecessary emission
+      .flatMapLatest(function (left) {
         return !left ? _rx2['default'].Observable['return'](left) : right;
-      })).merge(right.filter(function () {
-        return false;
-      })); // result should depend on right, but not be affected
-      // .do((v) => console.log(this.id+':Result:', v));
+      }))['do'](function (v) {
+        return _this.log('Result:', v);
+      });
     }
   }]);
 
@@ -907,28 +928,30 @@ var MemberExpression = (function (_RxNode) {
 
     /**
      * @param {Observable} context
+     * @param {Object} cache
      * @returns {Observable}
      */
-    value: function evaluateMember(context) {
-      var object = this.object.evaluate(context);
-      var property = this.computed ? this.property.evaluate(context) : _rx2['default'].Observable.just(this.property.name);
+    value: function evaluateMember(context, cache) {
+      var object = this.object.evaluate(context, cache);
+      var property = this.computed ? this.property.evaluate(context, cache) : _rx2['default'].Observable.just(this.property.name);
       return _rx2['default'].Observable.combineLatest(object, property, function (object, property) {
         return _rxnode2['default'].toObservable(object[property]).map(function (p) {
           return { object: object, property: p };
         });
       }).flatMap(function (ret) {
         return ret;
-      }).shareReplay(1);
+      });
     }
   }, {
     key: '_evaluate',
 
     /**
      * @param {Observable} context
+     * @param {Object} cache
      * @returns {Observable}
      */
-    value: function _evaluate(context) {
-      return this.evaluateMember(context).map(function (ret) {
+    value: function _evaluate(context, cache) {
+      return this.evaluateMember(context, cache).map(function (ret) {
         return ret.property;
       });
     }
@@ -997,13 +1020,14 @@ var ObjectExpression = (function (_RxNode) {
 
     /**
      * @param {Observable} context
+     * @param {Object} cache
      * @returns {Observable}
      */
-    value: function _evaluate(context) {
+    value: function _evaluate(context, cache) {
       var _Rx$Observable;
 
       var props = this.properties.map(function (prop) {
-        return prop.evaluate(context);
+        return prop.evaluate(context, cache);
       });
       return (_Rx$Observable = _rx2['default'].Observable).combineLatest.apply(_Rx$Observable, _toConsumableArray(props).concat([function () {
         for (var _len = arguments.length, props = Array(_len), _key = 0; _key < _len; _key++) {
@@ -1082,12 +1106,13 @@ var Property = (function (_RxNode) {
 
     /**
      * @param {Observable} context
+     * @param {Object} cache
      * @returns {Observable}
      */
-    value: function _evaluate(context) {
+    value: function _evaluate(context, cache) {
       var _this = this;
 
-      return this.value.evaluate(context).map(function (value) {
+      return this.value.evaluate(context, cache).map(function (value) {
         return { key: _this.key, value: value };
       });
     }
@@ -1151,23 +1176,29 @@ var RxNode = (function () {
 
   _createClass(RxNode, [{
     key: 'evaluate',
-    value: function evaluate() {
-      for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
+    value: function evaluate(context, cache) {
+      var cacheKey = this._findCacheKey();
+      var evaluated = cacheKey && cache[cacheKey] || this._evaluate(context, cache).shareReplay(1);
+      if (cacheKey) {
+        cache[cacheKey] = evaluated;
       }
-
-      return this._evaluate.apply(this, args).shareReplay(1);
+      return evaluated;
+    }
+  }, {
+    key: '_findCacheKey',
+    value: function _findCacheKey() {
+      return null;
     }
   }, {
     key: '_evaluate',
-    value: function _evaluate(context) {
+    value: function _evaluate() {
       throw new Error('evaluate() should be implemented in subclass.');
     }
   }, {
     key: 'log',
     value: function log() {
-      for (var _len2 = arguments.length, msg = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-        msg[_key2] = arguments[_key2];
+      for (var _len = arguments.length, msg = Array(_len), _key = 0; _key < _len; _key++) {
+        msg[_key] = arguments[_key];
       }
 
       if (this._debug) {
@@ -1212,7 +1243,7 @@ var RxNode = (function () {
      *
      */
     value: function isObservable(value) {
-      return typeof value === 'object' && typeof value.subscribe === 'function';
+      return typeof value === 'object' && value !== null && typeof value.subscribe === 'function';
     }
   }, {
     key: 'isPromiseLike',
@@ -1221,7 +1252,7 @@ var RxNode = (function () {
      *
      */
     value: function isPromiseLike(value) {
-      return typeof value === 'object' && typeof value.then === 'function';
+      return typeof value === 'object' && value !== null && typeof value.then === 'function';
     }
   }, {
     key: 'combineLatestRecursive',
@@ -1237,8 +1268,8 @@ var RxNode = (function () {
           return RxNode.combineLatestRecursive(elem);
         });
         return (_Rx$Observable = _rx2['default'].Observable).combineLatest.apply(_Rx$Observable, _toConsumableArray(elements).concat([function () {
-          for (var _len3 = arguments.length, elements = Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
-            elements[_key3] = arguments[_key3];
+          for (var _len2 = arguments.length, elements = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+            elements[_key2] = arguments[_key2];
           }
 
           return elements;
@@ -1346,11 +1377,12 @@ var UnaryExpression = (function (_RxNode) {
 
     /**
      * @param {Observable} context
+     * @param {Object} cache
      * @returns {Observable}
      */
-    value: function _evaluate(context) {
+    value: function _evaluate(context, cache) {
       var operation = UNARY_OPERATIONS[this.operator];
-      return this.argument.evaluate(context).map(operation);
+      return this.argument.evaluate(context, cache).map(operation);
     }
   }]);
 
@@ -17904,7 +17936,7 @@ var Rxpression = (function () {
       if (tree.body.length !== 1) {
         throw new Error('Only one expression statement is allowed in body');
       }
-      this._node = _nodes.RxNode.build(tree.body[0]);
+      this._node = _nodes.RxNode.build(tree.body[0], options, expr);
     } catch (e) {
       if (options.debug) {
         console.error(e.stack);
@@ -17923,7 +17955,7 @@ var Rxpression = (function () {
      */
     value: function evaluate(context) {
       context = _nodes.RxNode.toObservable(context);
-      return this._node.evaluate(context).map(function (ret) {
+      return this._node.evaluate(context, {}).map(function (ret) {
         return _nodes.RxNode.combineLatestRecursive(ret);
       }).flatMap(function (ret) {
         return ret;

@@ -23,11 +23,20 @@ export default class RxNode {
     this._debug = options.debug;
   }
 
-  evaluate(...args) {
-    return this._evaluate(...args).shareReplay(1);
+  evaluate(context, cache) {
+    let cacheKey = this._findCacheKey();
+    let evaluated = (cacheKey && cache[cacheKey]) || this._evaluate(context, cache).shareReplay(1);
+    if (cacheKey) {
+      cache[cacheKey] = evaluated;
+    }
+    return evaluated;
   }
 
-  _evaluate(context) {
+  _findCacheKey() {
+    return null;
+  }
+
+  _evaluate() {
     throw new Error('evaluate() should be implemented in subclass.');
   }
 

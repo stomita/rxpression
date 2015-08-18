@@ -19,9 +19,10 @@ export default class Literal extends RxNode {
 
   /**
    * @param {Observable} context
+   * @param {Observable} cache
    * @returns {Observable}
    */
-  _evaluate(context) {
+  _evaluate(context, cache) {
     return Rx.Observable.just(this.value);
   }
 

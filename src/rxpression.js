@@ -19,7 +19,7 @@ export default class Rxpression {
       if (tree.body.length !== 1) {
         throw new Error('Only one expression statement is allowed in body');
       }
-      this._node = RxNode.build(tree.body[0]);
+      this._node = RxNode.build(tree.body[0], options, expr);
     } catch(e) {
       if (options.debug) {
         console.error(e.stack);
@@ -35,7 +35,7 @@ export default class Rxpression {
    */
   evaluate(context) {
     context = RxNode.toObservable(context);
-    return this._node.evaluate(context).map(ret => {
+    return this._node.evaluate(context, {}).map(ret => {
       return RxNode.combineLatestRecursive(ret);
     }).flatMap(ret => ret).shareReplay(1);
   }

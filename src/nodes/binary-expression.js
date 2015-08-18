@@ -55,11 +55,11 @@ export default class BinaryExpression extends RxNode {
    * @param {Observable} context
    * @returns {Observable}
    */
-  _evaluate(context) {
+  _evaluate(context, cache) {
     var operation = BINARY_OPERATIONS[this.operator];
     return Rx.Observable.combineLatest(
-      this.left.evaluate(context),
-      this.right.evaluate(context),
+      this.left.evaluate(context, cache),
+      this.right.evaluate(context, cache),
       operation
     );
   }

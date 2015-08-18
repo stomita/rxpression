@@ -20,24 +20,26 @@ export default class MemberExpression extends RxNode {
 
   /**
    * @param {Observable} context
+   * @param {Object} cache
    * @returns {Observable}
    */
-  evaluateMember(context) {
-    var object = this.object.evaluate(context);
-    var property = this.computed ? this.property.evaluate(context) : Rx.Observable.just(this.property.name);
+  evaluateMember(context, cache) {
+    var object = this.object.evaluate(context, cache);
+    var property = this.computed ? this.property.evaluate(context, cache) : Rx.Observable.just(this.property.name);
     return Rx.Observable.combineLatest(object, property, (object, property) => {
       return RxNode.toObservable(object[property]).map(p => {
         return { object: object, property: p };
       });
-    }).flatMap(ret => ret).shareReplay(1);
+    }).flatMap(ret => ret);
   }
 
   /**
    * @param {Observable} context
+   * @param {Object} cache
    * @returns {Observable}
    */
-  _evaluate(context) {
-    return this.evaluateMember(context).map(ret => ret.property);
+  _evaluate(context, cache) {
+    return this.evaluateMember(context, cache).map(ret => ret.property);
   }
 
 }

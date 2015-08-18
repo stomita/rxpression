@@ -6,8 +6,6 @@ import RxNode from './rxnode';
 var orOp = (a, b) => a || b;
 var andOp = (a, b) => a && b;
 
-var id = 1;
-
 /**
  *
  */
@@ -18,7 +16,6 @@ export default class LogicalExpression extends RxNode {
    */
   constructor(config, options) {
     super(options);
-    this.id = id++;
     this.operator = config.operator;
     this.left = RxNode.build(config.left, options);
     this.right = RxNode.build(config.right, options);
@@ -26,24 +23,27 @@ export default class LogicalExpression extends RxNode {
 
   /**
    * @param {Observable} context
+   * @param {Object} cache
    * @returns {Observable}
    */
-  _evaluate(context) {
-    let left = this.left.evaluate(context); //.do((left) => console.log(this.id+':Left:', left));
-    let right = this.right.evaluate(context); //.do((right) => console.log(this.id+':Right:', right));
+  _evaluate(context, cache) {
+    let left = this.left.evaluate(context, cache)
+      .do((left) => this.log('Left:', left));
+    let right = this.right.evaluate(context, cache)
+      .debounce(1) // shareReplay chaining may cause repeated phantom sequence of previously sent results, so remove them
+      .do((right) => this.log('Right:', right));
     return (
       this.operator === '||' ?
-      left.distinctUntilChanged((v) => v || false)
+      left.distinctUntilChanged((v) => v || false) // normalize all falsy value changes in left node to "false", remove unnecessary emission
         .flatMapLatest((left) => {
           return left ? Rx.Observable.return(left) : right;
         }) :
-      left.distinctUntilChanged((v) => v && true)
+      left.distinctUntilChanged((v) => v && true) // normalize all truthy value changes in left node to "true", remove unnecessary emission
         .flatMapLatest((left) => {
           return !left ? Rx.Observable.return(left) : right;
         })
     )
-    .merge(right.filter(() => false)); // result should depend on right, but not be affected
-    // .do((v) => console.log(this.id+':Result:', v));
+    .do((v) => this.log('Result:', v));
   }
 
 }

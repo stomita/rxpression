@@ -20,10 +20,11 @@ export default class ArrowFunctionExpression extends RxNode {
 
   /**
    * @param {Observable} context
+   * @param {Object} cache
    * @returns {Observable}
    */
-  _evaluate(context) {
-    var defaults = this.defaults.map(value => value.evaluate(context));
+  _evaluate(context, cache) {
+    var defaults = this.defaults.map(value => value.evaluate(context, cache));
     return RxNode.toObservable(context).map((context) => {
       return (...params) => {
         var fn = function() {};
@@ -34,7 +35,7 @@ export default class ArrowFunctionExpression extends RxNode {
           var pvalue = params[i];
           ctx[pname] = typeof pvalue === 'undefined' || pvalue === null ? defaults[i] : pvalue;
         });
-        return this.body.evaluate(ctx);
+        return this.body.evaluate(ctx, Object.assign({}, cache));
       };
     });
   }
